@@ -1,0 +1,197 @@
+/* Importación de fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Raleway:wght@400;500&display=swap');
+
+/* Estilo General */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    
+    
+    align-items: center;
+    background: url('../img/fondo celeste.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #333;
+}
+
+
+h1 {
+    font-size: 50px;
+    font-weight: 700;
+    color: #1a1b1b;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+.game-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.guia-container {
+    flex-shrink: 0; /* Impide que se reduzca o cambie el tamaño */
+    width: 300px;  /* Ancho fijo */
+    height: 400px; /* Altura fija */
+    background: #e0f7fa;
+    padding: 20px;
+    border-radius: 15px;
+    border: 3px solid #0288d1;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    overflow-y: auto; /* Permite scroll si el contenido es más largo */
+    position: sticky; /* Mantiene la posición fija si hay scroll */
+    top: 20px;
+}
+
+.area-juego {
+    flex: 1; /* Permite que este elemento crezca según el contenido */
+    background: #e0f7fa;
+    padding: 20px;
+    border-radius: 15px;
+    border: 3px solid #0288d1;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    min-width: 0; /* Evita que los elementos secundarios rompan el diseño */
+}
+
+.cuadro {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    border: 2px solid #ccc;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.contenedor-imagen {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.texto-clima {
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px;
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    font-weight: bold;
+}
+
+.imagen-clima {
+    max-width: 100%;
+    height: auto;
+    cursor: move;
+}
+
+.cuadro-lleno {
+    border-color: #4CAF50;
+}
+/* Área del Juego */
+.area-juego {
+    flex: 2;
+    background: #e0f7fa;
+    padding: 20px;
+    border-radius: 15px;
+    border: 3px solid #0288d1;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Contenedor de Imágenes */
+.contenedor-imagenes {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Imágenes del Clima */
+.imagen-clima {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    border: 2px solid #0288d1;
+    cursor: grab;
+    transition: transform 0.2s;
+}
+
+.imagen-clima:hover {
+    transform: scale(1.1);
+}
+
+/* Contenedor de Cuadros */
+.contenedor-cuadros {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Cuadros del Clima */
+.cuadro {
+    width: 180px;
+    height: 180px;
+    border: 3px dashed #0288d1;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Botón de Reinicio */
+.boton-reiniciar button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #0288d1;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.3s;
+}
+
+.boton-reiniciar button:hover {
+    background: #2e7d32;
+    transform: scale(1.1);
+}
+
+/* Puntaje */
+#puntaje-container {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #0f2710;
+}
+
+/* Estilo de los botones */
+.boton-estilizado {
+    background-color: #0288d1;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.boton-estilizado:hover {
+    background-color: #0277bd;
+}

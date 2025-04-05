@@ -1,0 +1,94 @@
+/* Estilos generales para discapacidad visual */
+.modo-visual {
+    background-color: #222 !important;
+    color: white !important;
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    line-height: 1.5;
+    word-spacing: 0.3em;
+    cursor: url('https://cur.cursors-4u.net/cursors/cur-9/cur878.cur'), auto;
+}
+
+/* Diferentes niveles de contraste */
+.contraste-1 {
+    background-color: black !important;
+    color: yellow !important;
+}
+.contraste-2 {
+    background-color: white !important;
+    color: black !important;
+}
+.contraste-3 {
+    background-color: #333 !important;
+    color: lightgray !important;
+}
+
+/* Modo nocturno */
+.modo-nocturno {
+    background-color: #111 !important;
+    color: #bbb !important;
+}
+
+/* Estilos para los juegos */
+.modo-visual .juego {
+    background-color: #444 !important;
+    color: white !important;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    border: 2px solid white !important;
+    padding: 10px;
+    transition: transform 0.3s, background 0.3s;
+}
+
+.modo-visual .juego:hover, .modo-visual .juego:focus {
+    background-color: #555 !important;
+    transform: scale(1.05);
+}
+
+/* Resaltar la sección activa */
+.resaltado {
+    background-color: yellow !important;
+    color: black !important;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+/* Contenedor de los botones */
+#ajustes-visual, #modo-lectura {
+    position: fixed;
+    bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    max-width: 90%;
+    justify-content: center;
+    padding: 5px;
+    z-index: 1000;
+}
+
+#ajustes-visual {
+    left: 10px;
+}
+
+#modo-lectura {
+    right: 10px;
+}
+
+/* Botones de ajustes */
+#ajustes-visual button, 
+#modo-lectura button {
+    padding: 5px;
+    font-size: 1em;
+    border-radius: 8px;
+    background: #777;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    width: fit-content;
+}
+
+#ajustes-visual button:hover, 
+#modo-lectura button:hover {
+    background: white;
+    color: black;
+}

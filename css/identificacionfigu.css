@@ -1,0 +1,222 @@
+/* Tipografías y Estilo General */
+body {
+    font-family: 'Luckiest Guy', cursive;
+    background-color: #f7f9fc;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+/* Contenedor Principal con Flexbox */
+.game-container {
+    display: flex;
+    flex-direction: row; /* Asegura que los elementos estén en la misma fila */
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    max-width: 1200px;
+    flex-wrap: nowrap; /* Evita que los contenedores se apilen */
+}
+
+/* Panel de Guía con Bordes Coloridos */
+.guide-panel {
+    max-width: 350px;
+    padding: 25px;
+    background: #98fdf8;
+    border: 5px solid #ff9800;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+    flex: 1;
+}
+
+/* Botón de Pista con Animación */
+.help-button {
+    margin-top: 15px;
+    padding: 15px;
+    background: #4caf50;
+    border: 3px solid #388e3c;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s, background-color 0.3s;
+    font-weight: 600;
+}
+
+.help-button:hover {
+    background: #2e7d32;
+    transform: scale(1.1);
+}
+
+/* Panel de Juego */
+.container {
+    text-align: center;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    border: 5px solid #03a9f4;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    flex: 2; /* Panel de juego más grande que el de guía */
+}
+
+/* Título Principal */
+h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 48px;
+    color: #007bb5;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Información de Nivel y Puntaje */
+p.info {
+    font-family: 'Raleway', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+p.instructions {
+    font-family: 'Raleway', sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: #444;
+}
+
+p.hint {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: #00796b;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+/* Figuras Estilo General */
+.figures {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.figure {
+    width: 120px;
+    height: 120px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 5px solid #000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.figure:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Formas Geométricas Específicas */
+.triangle {
+    background-color: #ff5252;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    border: 5px solid #e53935;
+}
+
+.square {
+    background-color: #ffc107;
+    border: 5px solid #ffb300;
+}
+
+.circle {
+    background-color: #03a9f4;
+    border-radius: 50%;
+    border: 5px solid #0288d1;
+}
+
+.hexagon {
+    background-color: #8bc34a;
+    clip-path: polygon(50% 0%, 90% 25%, 90% 75%, 50% 100%, 10% 75%, 10% 25%);
+    border: 5px solid #689f38;
+}
+
+.star {
+    background-color: #ff9800;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    border: 5px solid #f57c00;
+}
+
+.pentagon {
+    background-color: #9c27b0;
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    border: 5px solid #7b1fa2;
+}
+
+.trapezoid {
+    background-color: #00bcd4;
+    clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+    border: 5px solid #0097a7;
+}
+
+.rectangle {
+    background-color: #f44336;
+    border: 5px solid #d32f2f;
+}
+
+.parallelogram {
+    background-color: #009688;
+    clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+    border: 5px solid #00796b;
+}
+
+.ellipse {
+    background-color: #673ab7;
+    border-radius: 50% / 30%;
+    border: 5px solid #512da8;
+}
+
+/* Efecto de Selección de Figura */
+.figure:focus {
+    outline: 4px solid #03a9f4;
+    transform: scale(1.15);
+    box-shadow: 0 0 20px rgba(0, 121, 191, 0.8);
+}
+
+/* Diseño Adaptativo (Responsive) */
+@media (max-width: 768px) {
+    .game-container {
+        flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+        align-items: center;
+        gap: 20px;
+    }
+
+    .container, .guide-panel {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    p.instructions {
+        font-size: 28px;
+    }
+
+    .figure {
+        width: 100px;
+        height: 100px;
+    }
+}

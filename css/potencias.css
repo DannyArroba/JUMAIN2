@@ -1,0 +1,326 @@
+/* Base styles and background */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-image: url('../img/FONDO_POTENCIA.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 40px 20px;
+    min-height: 100vh;
+    color: #2d3748;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: -1;
+}
+
+/* Typography rules */
+h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-align: center;
+    margin: 40px 0 20px;
+    color: #0e0d0d;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+
+h2 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 36px; /* Reducido de 32px */
+    letter-spacing: 0.06em;
+    line-height: 1.4; /* Reducido de 1.6 */
+    margin: 15px 0 10px; /* Reducido de 30px 0 15px */
+    color: #030303;
+}
+
+.instructions {
+    background-color: #fdfdfd;
+    border: 3px solid #000000;
+    border-radius: 15px;
+    padding: 10px;
+    flex: 0.4;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    max-height: 400px;
+    min-height: calc(400px + 113px); /* 400px original + ~3cm extra */
+}
+
+
+.instructions h2 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    font-size: 38px; /* Aumentado el tamaño */
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    margin: 10px 0;
+    color: #000000;
+}
+
+.instructions p {
+    font-size: 18px; /* Aumentado el tamaño */
+    margin-bottom: 6px;
+    line-height: 1.3;
+    font-weight: 500;
+}
+
+.instructions button {
+    padding: 12px 24px;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+.game-area {
+    background-color: #ffffff;
+    border: 3px solid #000000;
+    border-radius: 15px;
+    padding: 30px;
+    flex: 1;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+
+/* El resto del CSS se mantiene igual */
+.game-container {
+    display: flex;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.options-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.option {
+    padding: 30px;
+    color: rgb(54, 23, 23);
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    border: 3px solid #000000;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.option:nth-child(1) {
+    background-color: #fd6565;
+}
+
+.option:nth-child(2) {
+    background-color: #a3a3eb;
+}
+
+.option:nth-child(3) {
+    background-color: #7bfd7b;
+}
+
+.option:nth-child(4) {
+    background-color: #44f9ff;
+}
+
+.option:hover {
+    transform: scale(1.05);
+}
+
+.level-info {
+    text-align: center;
+    margin: 30px 0;
+    font-size: 24px;
+    color: #000000;
+}
+
+.correct {
+    background-color: #7bfd7b !important; /* Verde más vibrante */
+    color: black !important;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.incorrect {
+    background-color: #fd6565 !important; /* Rojo más vibrante */
+    color: black !important;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos específicos para mantener los colores originales */
+.option:nth-child(1).correct,
+.option:nth-child(1).incorrect {
+    background-color: #fd6565 !important; /* Rojo */
+}
+
+.option:nth-child(2).correct,
+.option:nth-child(2).incorrect {
+    background-color: #a3a3eb !important; /* Azul */
+}
+
+.option:nth-child(3).correct,
+.option:nth-child(3).incorrect {
+    background-color: #7bfd7b !important; /* Verde */
+}
+
+.option:nth-child(4).correct,
+.option:nth-child(4).incorrect {
+    background-color: #44f9ff !important; /* Celeste */
+}
+
+/* Estilo para el puntaje total */
+#total-score {
+    font-size: 32px;
+    font-weight: bold;
+    color: #000000;
+}
+
+/* Contenedor del puntaje total */
+p:has(#total-score) {
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    margin: 20px 0;
+    color: #000000;
+}
+
+
+button {
+    background-color: #fc8b5a;
+    color: white;
+    border: 3px solid #000000;
+    padding: 15px 30px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+    background-color: #33dd33;
+}
+
+#problem-display {
+    text-align: center;
+    margin: 30px 0;
+    font-size: 32px;
+    font-weight: 600;
+    color: #000000;
+}
+
+/* Los estilos anteriores se mantienen igual hasta los estilos del modal */
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    color: #000000;
+    margin: 15% auto;
+    padding: 40px;
+    border: 3px solid #000000;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    animation: modalAppear 0.4s ease-out;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para el título del modal */
+#modal-title {
+    font-size: 36px; /* Aumentado de tamaño */
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #000000;
+}
+
+/* Estilos para el mensaje del modal */
+#modal-message {
+    font-size: 28px; /* Aumentado de tamaño */
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 25px;
+    color: #000000;
+}
+
+/* Estilos para el botón del modal */
+.modal-content button {
+    font-size: 24px; /* Aumentado de tamaño */
+    padding: 15px 40px;
+    margin-top: 20px;
+    background-color: #fc8b5a;
+    color: white;
+    border: 3px solid #000000;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.modal-content button:hover {
+    transform: scale(1.05);
+    background-color: #33dd33;
+}
+
+@keyframes modalAppear {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Ajustes responsivos para el modal */
+@media (max-width: 768px) {
+    #modal-title {
+        font-size: 30px;
+    }
+    
+    #modal-message {
+        font-size: 24px;
+    }
+    
+    .modal-content button {
+        font-size: 20px;
+        padding: 12px 30px;
+    }
+}

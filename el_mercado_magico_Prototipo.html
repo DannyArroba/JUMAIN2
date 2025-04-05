@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Mercado Mágico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script defer src="js/el_mercado_magico.js"></script>
+    <link rel="stylesheet" href="css/el_mercado_magico.css">
+    <style>
+        /* Aumenta el tamaño al pasar el mouse */
+        .hover\:scale-150:hover {
+            transform: scale(1.5);
+        }
+        /* Ajusta el tamaño del texto de 'Selecciona los objetos' */
+        .seleccion-objetos {
+            font-size: 2.5rem !important; /* Ajustado el tamaño */
+        }
+        /* Agranda el título de 'El Mercado Mágico' */
+        .titulo-mercado {
+            font-size: 5.5rem !important; /* Aumentado el tamaño */
+        }
+        /* Agranda el texto de la guía del juego */
+        .guia-juego {
+            font-size: 2rem !important; /* Aumentado el tamaño */
+            text-align: justify; /* Justificado el texto */
+        }
+        /* Mejora la apariencia de los botones */
+        .boton-estilizado {
+            font-size: 1rem;
+            padding: 12px 20px;
+            margin: 5px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .boton-estilizado:hover {
+            transform: scale(1.1);
+            background-color: #6b46c1; /* Color de fondo cuando se pasa el mouse */
+        }
+        /* Agranda el título de la guía al pasar el mouse */
+        .titulo-guia:hover {
+            transform: scale(1.5);
+            font-size: 3.5rem !important;
+        }
+        /* Agranda el texto de la guía al pasar el mouse */
+        .texto-guia:hover {
+            transform: scale(1.5);
+            font-size: 2.5rem !important;
+        }
+        /* Agranda el título del Mercado Mágico al pasar el mouse */
+        .mercado-magic:hover {
+            transform: scale(1.5);
+            font-size: 7rem !important;
+        }
+        /* Estilos para el botón regresar */
+        .boton-regresar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #6b46c1;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .boton-regresar:hover {
+            background-color: #4c2a8c;
+        }
+    </style>
+</head>
+<body class="bg-blue-100 min-h-screen flex flex-col items-center font-poppins relative">
+    <a href="menu.php" class="boton-regresar">Regresar</a>
+    
+
+    <div class="container mx-auto p-8 flex flex-col md:flex-row gap-8 mt-16"> <!-- Añadido mt-16 para separar los contenedores -->
+        <!-- Contenedor de la guía -->
+        <div class="w-full md:w-1/3 bg-blue-300 border-4 border-dotted border-purple-500 shadow-lg rounded-lg p-6">
+            <h2 class="titulo-guia text-3xl font-extrabold text-center text-purple-800 mb-4">Guía de Juego</h2>
+            <p class="texto-guia guia-juego text-2xl text-gray-700 mb-4">
+                En este juego debes clasificar los objetos según las características indicadas. Arrastra los objetos al contenedor correspondiente: Tamaño, Textura o Cantidad.
+            </p>
+            <button id="leerGuia" class="bg-purple-400 text-white font-bold py-3 px-6 rounded hover:bg-purple-500 mb-4 boton-estilizado">
+                Leer Guía
+            </button>
+            <button id="controlAudio" class="bg-purple-400 text-white font-bold py-3 px-6 rounded hover:bg-purple-500 flex items-center justify-center boton-estilizado">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V5l12-2v16l-12-2z" />
+                </svg>
+                Audio
+            </button>
+        </div>
+
+        <!-- Contenedor del juego -->
+        <div class="w-full md:w-2/3 bg-blue-300 border-4 border-dotted border-purple-500 shadow-lg rounded-lg p-6">
+            <h1 class="mercado-magic titulo-mercado text-5xl font-extrabold text-center text-purple-800 mb-6">El Mercado Mágico</h1>
+            <p id="instruccion" class="seleccion-objetos text-3xl font-bold text-center text-purple-700 mb-6 hover:scale-150">
+                Selecciona los objetos indicados.
+            </p>
+
+            <!-- Tablero de objetos -->
+            <div id="tablero" class="grid grid-cols-4 gap-6 mb-6">
+                <!-- Los objetos aparecerán aquí -->
+            </div>
+
+            <!-- Cestas para clasificar -->
+            <div class="grid grid-cols-3 gap-6">
+                <div id="cestaTamaño" class="cesta relative bg-cover bg-center bg-no-repeat p-4 min-h-[200px] rounded-lg shadow-md hover:scale-150 transition-all" style="background-image: url('./img/cesta_animal2.jpg');">
+                    <div class="absolute inset-0 bg-black bg-opacity-30 rounded-lg"></div>
+                    <h2 class="text-xl font-bold text-white mb-2 text-center relative z-10">Tamaño (Animales)</h2>
+                    <div class="cesta-content flex flex-wrap gap-2 relative z-10"></div>
+                </div>
+
+                <div id="cestaTextura" class="cesta relative bg-cover bg-center bg-no-repeat p-4 min-h-[200px] rounded-lg shadow-md hover:scale-150 transition-all" style="background-image: url('./img/Cesta_duro.jpg');">
+                    <div class="absolute inset-0 bg-black bg-opacity-30 rounded-lg"></div>
+                    <h2 class="text-xl font-bold text-white mb-2 text-center relative z-10">Textura (Objetos)</h2>
+                    <div class="cesta-content flex flex-wrap gap-2 relative z-10"></div>
+                </div>
+
+                <div id="cestaCantidad" class="cesta relative bg-cover bg-center bg-no-repeat p-4 min-h-[200px] rounded-lg shadow-md hover:scale-150 transition-all" style="background-image: url('./img/Cesta_frutas.avif');">
+                    <div class="absolute inset-0 bg-black bg-opacity-30 rounded-lg"></div>
+                    <h2 class="text-xl font-bold text-white mb-2 text-center relative z-10">Cantidad (Frutas)</h2>
+                    <div class="cesta-content flex flex-wrap gap-2 relative z-10"></div>
+                </div>
+            </div>
+
+            <div class="mt-6 text-center">
+                <p class="text-xl font-bold text-gray-700">Nivel: <span id="nivel">1</span></p>
+                <p class="text-xl font-bold text-gray-700">Puntaje: <span id="puntaje">0</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audios -->
+    <audio id="audio-bien-hecho" src="./audio/correcto.mp3"></audio>
+    <audio id="audio-error" src="./audio/incorrecto.mp3"></audio>
+    <script>
+        const controlAudioBtn = document.getElementById("controlAudio");
+        let audioMuted = false;
+
+        controlAudioBtn.addEventListener("click", () => {
+            audioMuted = !audioMuted;
+            document.querySelectorAll("audio").forEach(audio => audio.muted = audioMuted);
+            controlAudioBtn.querySelector("path").setAttribute("d", audioMuted 
+                ? "M3 10l6-6m0 12l-6-6m9 2v6h4m4-4a4 4 0 0 0-4 4v-4" 
+                : "M9 19V5l12-2v16l-12-2z");
+        });
+
+        document.getElementById("leerGuia").addEventListener("click", () => {
+            const guiaTexto = `En este juego debes clasificar los objetos según las características indicadas. 
+            Arrastra los objetos al contenedor correspondiente: Tamaño, Textura o Cantidad.`;
+            const speech = new SpeechSynthesisUtterance(guiaTexto);
+            speech.lang = "es-ES";
+            speech.pitch = 1;
+            speech.rate = 1;
+            window.speechSynthesis.speak(speech);
+        });
+    </script>
+</body>
+</html>

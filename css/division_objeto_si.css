@@ -1,0 +1,177 @@
+body {
+    font-family: 'Luckiest Guy', cursive;
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #58e4b0;  /* Color verde claro */
+    filter: blur(10px);  /* Mantén el filtro de desenfoque si lo deseas */
+    z-index: -1;
+}
+
+
+.tv-frame {
+    width: 90%;
+    max-width: 800px;
+    aspect-ratio: 4 / 3;
+    background: #7ae4c1;
+    border: 10px solid #29ad4a;
+    border-radius: 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.tv-frame:hover {
+    transform: scale(1.05);
+}
+
+.tv-screen {
+    width: 95%;
+    height: 90%;
+    background: #9dfad6;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+}
+
+.game-area {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    height: 200px;
+    gap: 150px;
+}
+
+.circle {
+    width: 210px;
+    height: 250px;
+    border-radius: 50%;
+    border: 5px solid #23cf6b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 0 10px;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.object {
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    margin: 5px;
+    position: relative;
+}
+
+.object:hover {
+    transform: scale(1.2);
+}
+
+.minus-sign {
+    font-size: 6rem;
+    color: #105b7e;
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.answers {
+    margin-top: 75px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.answer {
+    padding: 10px 20px;
+    background-color: #11ac4c;
+    color: white;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    margin: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.answer:hover {
+    background-color: #2c86cf;
+    transform: scale(1.2);
+}
+
+.level-title {
+    font-size: 2rem;
+    color: #070707;
+    margin-bottom: 20px;
+}
+
+.temporary-message {
+    font-size: 1.2rem;
+    color: #ff6347;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.message {
+    font-size: 1.5rem;
+    color: #0288d1;
+    margin-top: 20px;
+}
+
+#score {
+    font-size: 1.5rem;
+    color: rgb(26, 24, 24);
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+h1, h2, p {
+    transition: transform 0.3s ease;
+}
+
+h1:hover, h2:hover, p:hover {
+    transform: scale(1.2);
+}
+.divide-sign {
+    font-size: 50px;  /* Ajusta el tamaño del signo de división */
+    font-weight: bold;
+    text-align: center;
+    margin: 0 10px;
+    position: absolute;  /* Posiciona el signo sin afectar al layout */
+    left: 50%;  /* Coloca el signo de división al centro horizontal */
+    top: 50%;   /* Coloca el signo de división al centro vertical */
+    transform: translate(-50%, -50%); /* Asegura que esté perfectamente centrado */
+}

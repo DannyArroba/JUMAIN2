@@ -1,0 +1,158 @@
+body {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background-color: #f5e6cc; /* Fondo amigable para problemas visuales */
+  color: #000;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.level-indicator {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  background-color: #ffffff;
+  color: #333333;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.guide-container {
+  flex: 1;
+  max-width: 30%;
+  margin-right: 20px;
+  background-color: #fff7c0;
+  border: 4px dashed #ffa500;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.guide-container h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.guide-container ul {
+  text-align: left;
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.guide-container li {
+  margin-bottom: 8px;
+}
+
+.guide-container p {
+  margin-bottom: 10px;
+}
+
+.game-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 4px dashed #ffcc00;
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  width: 90%;
+  max-width: 600px;
+  margin: 80px auto;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.question-container {
+  background-color: #fff7c0;
+  border: 3px solid #ffa500;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+}
+
+.sound-btn {
+  background-color: #00a8e8;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+.sound-btn:hover {
+  transform: scale(1.2);
+}
+
+.options-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.option {
+  width: 45%;
+  border: 4px solid #000;
+  border-radius: 15px;
+  padding: 20px;
+  cursor: pointer;
+  font-size: 1.5em;
+  text-align: center;
+  transition: all 0.3s ease;
+  background-color: #ffdf80;
+}
+
+.option:hover {
+  transform: scale(1.1);
+  background-color: #ffcc00;
+}
+
+.shape {
+  display: inline-block;
+  padding: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  border-radius: 50%;
+}
+
+.circle {
+  background-color: #ff6347;
+}
+
+.square {
+  background-color: #4682b4;
+  border-radius: 10px;
+}
+
+.triangle {
+  background-color: #6a5acd;
+}
+
+.cross {
+  background-color: #32cd32;
+  border-radius: 10%;
+}

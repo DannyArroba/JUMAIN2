@@ -1,0 +1,65 @@
+/* Fondo general */
+body {
+    background-color: #e6f7ff;
+    font-family: Arial, sans-serif;
+}
+
+/* Encabezado */
+h1 {
+    color: #4a90e2;
+}
+
+/* Regla virtual */
+#virtualRule {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+
+/* Objeto */
+#objectImage {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+/* Nivel */
+#nivel {
+    margin-top: 16px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Botones de opciones */
+.opcion {
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.opcion:hover {
+    transform: scale(1.05);
+}
+
+/* Botón Correcto */
+.opcion.correcto {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Botón Incorrecto */
+.opcion.incorrecto {
+    background-color: #F44336;
+    color: white;
+}
+
+/* Resultado */
+#resultado {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
