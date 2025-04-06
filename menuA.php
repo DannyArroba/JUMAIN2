@@ -14,6 +14,89 @@ $nombre = 'N/A';
 $apellido = 'N/A';
 $discapacidades = [];
 
+$nota_final = 1;
+$completo = false;
+$total_fallos = 0;
+$juegos_faltantes = [];
+$juegos_avanzado = [
+    17 => 'Potencias Básicas',
+    18 => 'MCD y MCM Visual',
+    19 => 'Coloreando Fracciones'
+];
+
+try {
+    $stmt = $conexion->prepare("
+        SELECT juego_id, nivel, fallos
+        FROM progreso
+        WHERE estudiante_cedula = :cedula AND juego_id BETWEEN 17 AND 19
+    ");
+    $stmt->bindParam(':cedula', $cedula, PDO::PARAM_STR);
+    $stmt->execute();
+    $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $progresos = [];
+    $juegos_jugados_ids = [];
+
+    foreach ($registros as $registro) {
+        $id = (int)$registro['juego_id'];
+        $nivel = (int)$registro['nivel'];
+        $fallos = (int)$registro['fallos'];
+
+        if (!isset($progresos[$id])) {
+            $progresos[$id] = [
+                'nivel_maximo' => $nivel,
+                'total_fallos' => $fallos
+            ];
+        } else {
+            $progresos[$id]['nivel_maximo'] = max($progresos[$id]['nivel_maximo'], $nivel);
+            $progresos[$id]['total_fallos'] += $fallos;
+        }
+
+        $juegos_jugados_ids[] = $id;
+    }
+
+    $juegos_jugados_ids = array_unique($juegos_jugados_ids);
+    $puntos_acumulados = 0;
+    $total_fallos = 0;
+
+    foreach ($juegos_avanzado as $id => $nombre) {
+        if (isset($progresos[$id])) {
+            $nivel = $progresos[$id]['nivel_maximo'];
+            $fallos = $progresos[$id]['total_fallos'];
+            $puntos_acumulados += min($nivel, 3);
+            $total_fallos += $fallos;
+
+            if ($nivel < 3) {
+                $juegos_faltantes[$id] = "$nombre (nivel $nivel)";
+            }
+        } else {
+            $juegos_faltantes[$id] = "$nombre (sin jugar)";
+        }
+    }
+
+    if ($puntos_acumulados === 0) {
+        $mensaje = "🔔 Aún no has jugado ningún juego del menú avanzado. ¡Empieza ahora para ganar puntos!";
+    } else {
+        if ($puntos_acumulados === 9) {
+            $completo = true;
+            $nota_base = 10;
+        } else {
+            $nota_base = ($puntos_acumulados / 9) * 9 + 1;
+        }
+
+        $penalizacion = $total_fallos * 0.02;
+        $nota_final = round(max(1, $nota_base - $penalizacion), 2);
+
+        $mensaje = $completo
+            ? "🎉 ¡Felicidades! Completaste todos los juegos. Tu nota es $nota_final / 10."
+            : "📘 Tu nota actual del menú avanzado es: $nota_final / 10.";
+    }
+} catch (PDOException $e) {
+    $mensaje = "⚠️ Error al calcular tu nota.";
+}
+
+
+
 // Consultar nombre y apellido
 try {
     $stmt = $conexion->prepare("SELECT nombre, apellido FROM estudiantes WHERE cedula = :cedula");
@@ -52,6 +135,8 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menú Juegos Avanzados</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
 
     <!-- Cargar estilos de adaptación según discapacidad -->
     <?php if (in_array('Visual', $discapacidades)): ?>
@@ -78,9 +163,11 @@ try {
     <?= in_array('Cognitiva', $discapacidades) ? 'modo-cognitivo' : '' ?>
 ">
 
-    <!-- Encabezado -->
-    <header class="bg-white text-gray-800 p-6 flex justify-between items-center shadow-lg rounded-b-3xl">
-        <h1 class="text-3xl font-extrabold text-blue-700 drop-shadow-lg">✨ Menú Juegos Avanzados ✨</h1>
+   <!-- Encabezado: tope y lados -->
+   <header class="bg-white text-gray-800 p-4 flex justify-between items-center shadow-lg rounded-b-3xl w-full">
+        <h1 class="text-2xl font-extrabold text-blue-700 drop-shadow-lg">
+        ✨ Menú Juegos - Clase Avanzada ✨
+        </h1>
         <div class="text-right">
             <span class="font-bold">✈ Bienvenido, <?= $nombre . ' ' . $apellido; ?> ✈</span>
             <span class="text-red-500 text-lg font-bold">
@@ -89,7 +176,9 @@ try {
                 } ?>
             </span>
             <form action="./php/logout.php" method="post" class="inline-block ml-4">
-                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold px-4 py-2 rounded-lg shadow-md">Cerrar Sesión</button>
+                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold px-4 py-2 rounded-lg shadow-md">
+                    Cerrar Sesión
+                </button>
             </form>
         </div>
     </header>
@@ -103,6 +192,44 @@ try {
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
+
+    <!-- Tabs -->
+<div x-data="{ tab: 'nota', showFaltantes: false }" class="container mx-auto mt-6 bg-white rounded-xl shadow-lg border border-gray-300 p-6">
+    <div class="flex space-x-4 border-b pb-2 mb-4">
+        <button @click="tab = 'nota'" :class="tab === 'nota' ? 'border-b-4 border-blue-500 font-bold' : 'text-gray-600'" class="text-lg focus:outline-none">📘 Nota Actual</button>
+        <button @click="tab = 'progreso'" :class="tab === 'progreso' ? 'border-b-4 border-blue-500 font-bold' : 'text-gray-600'" class="text-lg focus:outline-none">📈 Progreso por Juego</button>
+    </div>
+
+    <div x-show="tab === 'nota'" x-transition>
+        <p class="text-3xl font-extrabold text-blue-700 mb-2">⭐ Tu nota actual: <?= $nota_final ?>/10</p>
+        <p class="text-gray-800 mb-4"><?= $mensaje ?></p>
+        <?php if (!$completo && !empty($juegos_faltantes)): ?>
+            <button @click="showFaltantes = !showFaltantes" class="bg-yellow-300 text-yellow-900 px-4 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold transition">🎮 Mostrar juegos que debes completar</button>
+            <div x-show="showFaltantes" x-transition class="mt-4">
+                <ul class="list-disc list-inside text-gray-700">
+                    <?php foreach ($juegos_faltantes as $nombre): ?><li><?= $nombre ?></li><?php endforeach; ?>
+                </ul>
+                <p class="mt-2 text-sm text-blue-700">🚀 ¡Sigue jugando para alcanzar el 10!</p>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <div x-show="tab === 'progreso'" x-transition>
+        <?php if (!empty($progresos)): ?>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <?php foreach ($progresos as $juego_id => $progreso): ?>
+                    <div class="bg-gray-100 p-4 rounded-lg shadow text-gray-900">
+                        <h3 class="text-lg font-bold mb-2 text-blue-800"><?= $juegos_avanzado[$juego_id] ?></h3>
+                        <p class="text-base">Nivel alcanzado: <span class="text-blue-700 font-extrabold text-xl"><?= $progreso['nivel_maximo'] ?></span></p>
+                        <p class="text-base">Fallos: <span class="text-red-600 font-extrabold text-xl"><?= $progreso['total_fallos'] ?></span></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <p class="text-gray-600">Aún no has jugado ningún juego. ¡Empieza ahora para ver tu progreso!</p>
+        <?php endif; ?>
+    </div>
+</div>
 
     <!-- Contenedor de juegos -->
     <div class="container mx-auto p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
