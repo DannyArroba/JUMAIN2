@@ -106,7 +106,6 @@ function calcularNota($puntos, $maximo, $fallos) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="../js/reporte_excel.js"></script>
 <script src="../js/reporte_pdf.js"></script>
-
 </head>
 <body class="bg-gray-100 p-6">
 
@@ -118,7 +117,7 @@ function calcularNota($puntos, $maximo, $fallos) {
             Institución<?= count($instituciones) > 1 ? 'es' : '' ?>: <strong><?= implode(', ', $instituciones) ?></strong>
         </p>
     </div>
-    <div class="mt-4 flex justify-center gap-4">
+    <div class="mt-4 flex justify-center gap-4 mb-6">
     <button onclick="exportarExcelPlano()" class="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-600">📥 Exportar a Excel</button>
     <button onclick="exportarPDFPlano()" class="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-600">📄 Exportar a PDF</button>
 </div>

@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Si no se encuentra la cédula, redirigir al inicio con error
     $_SESSION['error'] = 'Cédula no encontrada.';
-    header('Location: ../portada.php');
+    header('Location: ../index.php');
     exit;
 }
 ?>

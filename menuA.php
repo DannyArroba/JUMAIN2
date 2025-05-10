@@ -4,7 +4,7 @@ require_once './php/conexion.php';
 
 // Verificar si el usuario ha iniciado sesión y si es un estudiante
 if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'estudiante') {
-    header('Location: ./portada.php');
+    header('Location: ./index.php');
     exit;
 }
 
