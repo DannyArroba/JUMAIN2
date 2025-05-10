@@ -18,7 +18,7 @@ const levels = [
     {
         layout: [
             "WWWWWWWWWW",
-            "WSRRRRWRRW",
+            "WSRRRRRRRW",
             "WWWWRWWRRW",
             "WRRRRRWRRW",
             "WRWWWRWRRW",
@@ -123,6 +123,7 @@ function createBoard() {
                 case 'F':
                     cell.classList.add('road');
                     cell.classList.add('goal');
+                    cell.innerHTML = "💰"; // Emoji del tesoro
                     break;
             }
             gameBoard.appendChild(cell);
@@ -145,36 +146,39 @@ function move(direction) {
     let rotation = 0;
 
     switch (direction) {
-        case 'up':
-            newPosition.y--;
-            rotation = -90;
-            break;
-        case 'down':
-            newPosition.y++;
-            rotation = 90;
-            break;
-        case 'left':
-            newPosition.x--;
-            rotation = 180;
-            break;
-        case 'right':
-            newPosition.x++;
-            rotation = 0;
-            break;
+        case 'up': newPosition.y--; rotation = -90; break;
+        case 'down': newPosition.y++; rotation = 90; break;
+        case 'left': newPosition.x--; rotation = 180; break;
+        case 'right': newPosition.x++; rotation = 0; break;
     }
 
     const level = levels[currentLevel];
-    if (
-        newPosition.x >= 0 && newPosition.x < 10 &&
-        newPosition.y >= 0 && newPosition.y < 10 &&
-        level.layout[newPosition.y][newPosition.x] !== 'W'
-    ) {
-        playerPosition = newPosition;
-        updatePlayerPosition();
-        document.querySelector('.car').style.transform = `rotate(${rotation}deg)`;
+    if (newPosition.x >= 0 && newPosition.x < 10 && newPosition.y >= 0 && newPosition.y < 10) {
+        const destino = level.layout[newPosition.y][newPosition.x];
 
-        if (level.layout[newPosition.y][newPosition.x] === 'F') {
-            levelComplete();
+        if (destino === 'W') {
+            // Choque con pared
+            window.audioIncorrecto.play();
+            fallos++;
+            guardarProgreso();
+            Swal.fire({
+                icon: "error",
+                title: "¡Oh no!",
+                text: "¡Has chocado con una pared!",
+                timer: 1000,
+                showConfirmButton: false
+            }).then(() => {
+                createBoard(); // Reinicia el nivel
+            });
+        } else {
+            // Movimiento válido
+            playerPosition = newPosition;
+            updatePlayerPosition();
+            document.querySelector('.car').style.transform = `rotate(${rotation}deg)`;
+
+            if (destino === 'F') {
+                levelComplete();
+            }
         }
     }
 }
