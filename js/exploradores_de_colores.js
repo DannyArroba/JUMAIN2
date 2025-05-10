@@ -17,6 +17,7 @@ let nivel = 1;              // Nivel actual (se reinicia a 1 al reiniciar el jue
 const maxNivel = 3;         // Máximo nivel del juego
 let repeticionesNivel = 0;  // Veces que se ha replicado correctamente el patrón en el nivel actual
 let puntaje = 0;
+let fallos = 0;
 let patronActual = [];
 let seleccionUsuario = [];
 
@@ -43,6 +44,8 @@ async function obtenerProgreso() {
         if (data.success) {
             nivel = data.nivel;
             puntaje = data.puntaje;
+            fallos = data.fallos || 0;
+
         }
     } catch (error) {
         console.error("Error al obtener el progreso:", error);
@@ -56,7 +59,7 @@ async function guardarProgreso() {
         await fetch(`../php/progreso.php`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `juego_id=${juegoID}&nivel=${nivel}&puntaje=${puntaje}&fallos=0`
+            body: `juego_id=${juegoID}&nivel=${nivel}&puntaje=${puntaje}&fallos=${fallos}`
         });
     } catch (error) {
         console.error("Error al guardar el progreso:", error);
@@ -200,6 +203,7 @@ function verificarPatron() {
             showConfirmButton: false
         });
         puntaje -= 10;
+        fallos += 1;
         // Guarda el progreso también en caso de error
         guardarProgreso();
         iniciarJuego();
