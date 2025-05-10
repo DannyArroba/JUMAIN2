@@ -49,10 +49,10 @@
 
         <!-- Panel de ayuda -->
         <div id="help-panel" class="hidden help-box">
-            <h2>🌟 Acerca de JUMAIN 🌟</h2>
+            <h2>🌟Acerca de JUMAIN</h2>
             <p>Este juego educativo fue desarrollado por estudiantes creativos 💡.</p>
             <p>© 2024 JUMAIN. Todos los derechos reservados.</p>
-            <p>Diseño inspirado en madera clara y tonos cálidos para accesibilidad.</p>
+            <p></p>
             <button onclick="document.getElementById('help-panel').classList.add('hidden')" class="cerrar-btn">Cerrar</button>
         </div>
 

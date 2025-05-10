@@ -47,6 +47,9 @@
     }
     ?>
 <!-- header.php -->
+ <!-- AUDIO DE MÚSICA DE FONDO -->
+<audio id="musicaFondo" src="./audio/musica.mp3" autoplay loop></audio>
+
 <style>
   html, body {
     margin: 0;
@@ -85,6 +88,33 @@
     font-family: Arial, sans-serif;
 }
 
+.volume-panel {
+  position: absolute;
+  top: 70px;
+  right: 70px;
+  background: #fff;
+  border: 2px solid #ccc;
+  border-radius: 1rem;
+  padding: 15px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  width: 250px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.volume-panel h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #1D4ED8;
+}
+
+.volume-slider {
+  width: 100%;
+}
+
+
 </style>
 
         <header class="header-container">
@@ -114,7 +144,16 @@
                 </button>
             </div>
         </header>
+        <div id="volumePanel" class="volume-panel" style="display: none;">
+  <h4>Volumen Música</h4>
+  <input type="range" id="volMusica" class="volume-slider" min="0" max="1" step="0.01">
+  <h4>Volumen “Muy Bien”</h4>
+  <input type="range" id="volMuyBien" class="volume-slider" min="0" max="1" step="0.01">
+  <h4>Volumen “Incorrecto”</h4>
+  <input type="range" id="volIncorrecto" class="volume-slider" min="0" max="1" step="0.01">
+</div>
     `;
+    
 
     const headerContainer = document.getElementById('custom-header');
     const shadowRoot = headerContainer.attachShadow({ mode: 'open' });
@@ -180,24 +219,55 @@
 
 
     function toggleSound() {
-    // Comprueba si los objetos de audio existen y cambia su estado 'muted'
-    if (window.musicaFondo) {
-        window.musicaFondo.muted = !window.musicaFondo.muted;
-    }
-    if (window.audioMuyBien) {
-        window.audioMuyBien.muted = !window.audioMuyBien.muted;
-    }
-    if (window.audioIncorrecto) {
-        window.audioIncorrecto.muted = !window.audioIncorrecto.muted;
-    }
+    // Mostrar/ocultar el panel de volumen
+    const panel = shadowRoot.getElementById('volumePanel');
+    panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
 
-    // Actualiza el ícono según el estado del audio (opcional)
+    // Cambia ícono si la música está silenciada
     const soundIcon = document.getElementById("soundIcon");
     if (window.musicaFondo && window.musicaFondo.muted) {
-        soundIcon.src = './img10/sound_off.png'; // Asegúrate de tener este icono
+        soundIcon.src = './img10/sound_off.png';
     } else {
         soundIcon.src = './img10/sonido.png';
     }
 }
+// Guardar volumen por usuario
+function guardarVolumen(nombre, valor) {
+    const cedula = "<?= $cedula ?>";
+    localStorage.setItem(nombre + "_" + cedula, valor);
+    if (window[nombre]) {
+        window[nombre].volume = valor;
+    }
+}
+
+// Cargar volumen guardado
+function cargarVolumen(nombre, defaultValue) {
+    const cedula = "<?= $cedula ?>";
+    const valor = parseFloat(localStorage.getItem(nombre + "_" + cedula));
+    return isNaN(valor) ? defaultValue : valor;
+}
+
+// Aplicar configuración después de cargar el header
+setTimeout(() => {
+    const volMusica = shadowRoot.getElementById('volMusica');
+    const volMuyBien = shadowRoot.getElementById('volMuyBien');
+    const volIncorrecto = shadowRoot.getElementById('volIncorrecto');
+
+    const defaultMusica = 0.333;
+    const defaultOtros = 1;
+
+    volMusica.value = cargarVolumen('musicaFondo', defaultMusica);
+    volMuyBien.value = cargarVolumen('audioMuyBien', defaultOtros);
+    volIncorrecto.value = cargarVolumen('audioIncorrecto', defaultOtros);
+
+    if (window.musicaFondo) window.musicaFondo.volume = volMusica.value;
+    if (window.audioMuyBien) window.audioMuyBien.volume = volMuyBien.value;
+    if (window.audioIncorrecto) window.audioIncorrecto.volume = volIncorrecto.value;
+
+    volMusica.addEventListener('input', () => guardarVolumen('musicaFondo', volMusica.value));
+    volMuyBien.addEventListener('input', () => guardarVolumen('audioMuyBien', volMuyBien.value));
+    volIncorrecto.addEventListener('input', () => guardarVolumen('audioIncorrecto', volIncorrecto.value));
+}, 300);
+
 </script>
 
