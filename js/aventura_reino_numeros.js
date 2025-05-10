@@ -1,6 +1,7 @@
 // Variables globales
 let nivel = 1;
 let puntaje = 0;
+let fallos = 0;
 let objetivo;
 let personajePos = { x: 0, y: 0 }; // Posición inicial del personaje
 const gridSize = 5; // Tamaño de la cuadrícula
@@ -34,6 +35,7 @@ async function obtenerProgreso() {
         if (data.success) {
             nivel = data.nivel;
             puntaje = data.puntaje;
+            fallos = data.fallos || 0;
         }
     } catch (error) {
         console.error("Error al obtener el progreso:", error);
@@ -48,7 +50,7 @@ async function guardarProgreso() {
         await fetch(`../php/progreso.php`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `juego_id=${juegoID}&nivel=${nivel}&puntaje=${puntaje}`
+            body: `juego_id=${juegoID}&nivel=${nivel}&puntaje=${puntaje}&fallos=${fallos}`
         });
     } catch (error) {
         console.error("Error al guardar el progreso:", error);
@@ -173,13 +175,18 @@ function actualizarPosicionPersonaje() {
 
 // Función para verificar colisiones con objetos
 function verificarColision() {
+    let colisionDetectada = false;
+
     objetos.forEach((objeto, index) => {
         if (personajePos.x === objeto.x && personajePos.y === objeto.y) {
+            colisionDetectada = true;
+
             if (objeto.tipo === "suma") {
                 operacionActual += objeto.valor;
             } else {
                 operacionActual -= objeto.valor;
             }
+
             operacionDisplay.textContent = operacionActual;
 
             // Eliminar objeto del escenario
@@ -188,7 +195,6 @@ function verificarColision() {
 
             // Verificar si se alcanzó el objetivo o se pasó
             if (operacionActual === objetivo) {
-                // Reproducir audio de acierto
                 window.audioMuyBien.play();
                 Swal.fire({
                     icon: "success",
@@ -199,7 +205,8 @@ function verificarColision() {
                 });
                 subirNivel();
             } else if (operacionActual > objetivo) {
-                // Reproducir audio de error
+                fallos++;
+                guardarProgreso();
                 window.audioIncorrecto.play();
                 Swal.fire({
                     icon: "error",
@@ -212,7 +219,23 @@ function verificarColision() {
             }
         }
     });
+
+    // 📌 Si no hubo colisión pero ya no hay más objetos y aún no se alcanzó el objetivo
+    if (!colisionDetectada && objetos.length === 0 && operacionActual !== objetivo) {
+        fallos++;
+        guardarProgreso();
+        window.audioIncorrecto.play();
+        Swal.fire({
+            icon: "error",
+            title: "¡Fallaste!",
+            text: "Se acabaron los objetos y no alcanzaste el objetivo.",
+            timer: 2000,
+            showConfirmButton: false,
+        });
+        reiniciarJuego();
+    }
 }
+
 
 // Función para subir de nivel
 function subirNivel() {
@@ -303,4 +326,20 @@ document.addEventListener("DOMContentLoaded", iniciarJuego);
 // Cargar progreso al iniciar
 document.addEventListener("DOMContentLoaded", async () => {
     await obtenerProgreso();
+});
+document.addEventListener("keydown", function (e) {
+    switch (e.key) {
+        case "ArrowUp":
+            moverPersonaje("arriba");
+            break;
+        case "ArrowDown":
+            moverPersonaje("abajo");
+            break;
+        case "ArrowLeft":
+            moverPersonaje("izquierda");
+            break;
+        case "ArrowRight":
+            moverPersonaje("derecha");
+            break;
+    }
 });
