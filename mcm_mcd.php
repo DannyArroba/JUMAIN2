@@ -1,3 +1,6 @@
+<?php
+require_once 'seguridad.php';   // Primero cargamos lógica de sesión
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

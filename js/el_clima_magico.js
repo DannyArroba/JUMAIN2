@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let nivel = 1;
     let puntaje = 0;
     let aciertos = 0;
+    let fallos = 0;     // Fallos global
     let intentosFallidos = 0;
     let juegosPorNivel = 0;
     const niveles = 3;
@@ -40,7 +41,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             await fetch(`../php/progreso.php`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `juego_id=${juegoID}&nivel=${nivel}&puntaje=${puntaje}`
+                body: `juego_id=${juegoID}&nivel=${nivel}&puntaje=${puntaje}&fallos=${fallos}`
+
             });
             console.log(`💾 Progreso guardado: Nivel ${nivel}, Puntaje ${puntaje}`);
         } catch (error) {
@@ -181,6 +183,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
             }
         } else {
+            fallos++;
+            guardarProgreso();
             audioIncorrecto.play();
             Swal.fire({
                 title: "¡Incorrecto!",

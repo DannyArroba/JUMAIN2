@@ -1,5 +1,6 @@
 const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD', '#D4A5A5'];
 let currentLevel = 1;
+let fallos = 0; // Fallos globales
 let coloredSegments = 0;
 let requiredSegments = 0;
 const juegoID = 19; // ID del juego en la base de datos
@@ -65,6 +66,8 @@ async function obtenerProgreso() {
 
         if (data.success) {
             currentLevel = data.nivel;
+            fallos = data.fallos || 0;
+
         }
     } catch (error) {
         console.error("Error al obtener el progreso:", error);
@@ -79,7 +82,8 @@ async function guardarProgreso() {
         await fetch(`../php/progreso.php`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `juego_id=${juegoID}&nivel=${currentLevel}&puntaje=0&fallos=0`
+            body: `juego_id=${juegoID}&nivel=${currentLevel}&puntaje=0&fallos=${fallos}`
+
         });
     } catch (error) {
         console.error("Error al guardar el progreso:", error);
@@ -162,6 +166,8 @@ function checkResult() {
             }
         });
     } else {
+        fallos++; // Se cuenta el fallo
+        guardarProgreso(); // Guarda inmediatamente el fallo
         window.audioIncorrecto.play();
         Swal.fire({
             title: '¡Ups!',

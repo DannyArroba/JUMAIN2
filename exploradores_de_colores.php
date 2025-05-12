@@ -1,3 +1,6 @@
+<?php
+require_once 'seguridad.php';   // Primero cargamos lógica de sesión
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,7 +15,7 @@
 </head>
 <body class="min-h-screen bg-gradient-to-r from-blue-200 to-blue-100">
     <!-- Incluir el encabezado -->
-    <?php include 'header.php'; ?>
+<?php include 'header.php'; ?>  <!-- Aquí cargamos el contenido visual -->
 
     <div class="grid grid-cols-4 gap-4 p-4">
         <!-- Contenedor de reglas y dinámica -->

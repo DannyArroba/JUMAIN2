@@ -1,8 +1,8 @@
 <?php
-$host = 'localhost:3307';
+$host = 'db:3306'; // ← ¡Este es el cambio importante!
 $db = 'jumain2';
 $user = 'root';
-$pass = '';
+$pass = 'rootpass';
 
 date_default_timezone_set('America/Guayaquil'); // ✅ ESTABLECE LA ZONA HORARIA CORRECTA
 
